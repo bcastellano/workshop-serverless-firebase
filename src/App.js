@@ -7,8 +7,12 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      todos: []
+      todos: [],
+      newTodo: ''
     }
+    this.removeTodo = this.removeTodo.bind(this);
+    this.addTodo = this.addTodo.bind(this);
+    this.updateInputValue = this.updateInputValue.bind(this);
   }
 
   componentDidMount() {
@@ -18,13 +22,49 @@ class App extends Component {
       .onSnapshot((querySnapshot) => {
         let newList = []
         querySnapshot.forEach(function(doc) {
-          newList.push(doc.data().text)
+          newList.push({
+            id: doc.id, 
+            ...doc.data()
+          })
         })
 
         this.setState({
           todos: newList
         })
       })
+  }
+
+  addTodo() {
+    firebase
+      .firestore()
+      .collection('todos')
+      .add({text: this.state.newTodo})
+      .then(function () {
+        console.log(`Document added successfully`)
+      })
+      .catch(function (error) {
+        console.error('Error removing document: ', error)
+      })
+  }
+
+  removeTodo(item) {
+    firebase
+      .firestore()
+      .collection('todos')
+      .doc(item.id)
+      .delete()
+      .then(function () {
+        console.log(`Document ${item.id} removed successfully`)
+      })
+      .catch(function (error) {
+        console.error('Error removing document: ', error)
+      })
+  }
+
+  updateInputValue(evt) {
+    this.setState({
+      newTodo: evt.target.value
+    })
   }
 
   render() {
@@ -35,21 +75,22 @@ class App extends Component {
           <p>
             Todo list
           </p>
+          <input
+            type="text"
+            placeholder="new todo..."
+            value={this.state.newTodo} onChange={this.updateInputValue}
+          />
+          <button onClick={this.addTodo}>add {this.state.newTodo ? "'" + this.state.newTodo + "'" : ''}</button>
           <ul>
             {this.state.todos.map((item) => {
               return (
-                <li>{item}</li>
+                <li key={item.id}>
+                  {item.text} 
+                  <button onClick={() => this.removeTodo(item)}>X</button>
+                </li>
               )
             })}
           </ul>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
         </header>
       </div>
     );

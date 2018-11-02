@@ -8,14 +8,25 @@ class App extends Component {
     super(props)
     this.state = {
       todos: [],
-      newTodo: ''
+      newTodo: '',
+      user: []
     }
     this.removeTodo = this.removeTodo.bind(this);
     this.addTodo = this.addTodo.bind(this);
     this.updateInputValue = this.updateInputValue.bind(this);
+    this.login = this.login.bind(this)
+    this.logout = this.logout.bind(this)
   }
 
   componentDidMount() {
+    const auth = firebase.auth()
+    auth.onAuthStateChanged(user => {
+      console.log(user)
+      this.setState({
+        user: user
+      })
+    })
+
     firebase
       .firestore()
       .collection('todos')
@@ -67,30 +78,55 @@ class App extends Component {
     })
   }
 
+  login() {
+    console.log('login')
+    const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
+    firebase.auth().signInWithPopup(googleAuthProvider)
+  }
+
+  logout() {
+    console.log('logout')
+    firebase.auth().signOut()
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Todo list
-          </p>
-          <input
-            type="text"
-            placeholder="new todo..."
-            value={this.state.newTodo} onChange={this.updateInputValue}
-          />
-          <button onClick={this.addTodo}>add {this.state.newTodo ? "'" + this.state.newTodo + "'" : ''}</button>
-          <ul>
-            {this.state.todos.map((item) => {
-              return (
-                <li key={item.id}>
-                  {item.text} 
-                  <button onClick={() => this.removeTodo(item)}>X</button>
-                </li>
-              )
-            })}
-          </ul>
+          <p>AUTH</p>
+          {!this.state.user &&
+            <button onClick={() => this.login()}>login</button>
+          }
+          
+          {this.state.user &&
+            <button onClick={() => this.logout()}>logout</button>
+          }
+          
+          {this.state.user &&
+            <div>
+            <p>{this.state.user.email}</p>
+            <p>
+              Todo list
+            </p>
+            <input
+              type="text"
+              placeholder="new todo..."
+              value={this.state.newTodo} onChange={this.updateInputValue}
+            />
+            <button onClick={this.addTodo}>add {this.state.newTodo ? "'" + this.state.newTodo + "'" : ''}</button>
+            <ul>
+              {this.state.todos.map((item) => {
+                return (
+                  <li key={item.id}>
+                    {item.text} 
+                    <button onClick={() => this.removeTodo(item)}>X</button>
+                  </li>
+                )
+              })}
+            </ul>
+            </div>
+          }
         </header>
       </div>
     );

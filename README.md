@@ -27,3 +27,5 @@ For this workshop we are going to need these software installed:
  - Configure google provider
     
 ## 5. Firebase Cloud Functions
+ - Create function and test it with `npm run serve`
+ - Publish app `firebase deploy --only functions`

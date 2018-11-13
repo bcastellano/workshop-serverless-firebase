@@ -1,0 +1,28 @@
+[debug] [2018-11-13T04:19:36.964Z] ----------------------------------------------------------------------
+[debug] [2018-11-13T04:19:36.967Z] Command:       /Users/blas.castellano/.nvm/versions/node/v8.0.0/bin/node /Users/blas.castellano/.nvm/versions/node/v8.0.0/bin/firebase serve --only functions
+[debug] [2018-11-13T04:19:36.967Z] CLI Version:   6.0.1
+[debug] [2018-11-13T04:19:36.967Z] Platform:      darwin
+[debug] [2018-11-13T04:19:36.967Z] Node Version:  v8.0.0
+[debug] [2018-11-13T04:19:36.968Z] Time:          Mon Nov 12 2018 23:19:36 GMT-0500 (EST)
+[debug] [2018-11-13T04:19:36.968Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-11-13T04:19:36.983Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-11-13T04:19:36.984Z] > authorizing via signed-in user
+[debug] [2018-11-13T04:19:36.984Z] [iam] checking project serverless-workshop-d34be for permissions ["firebase.projects.get"]
+[debug] [2018-11-13T04:19:36.986Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/serverless-workshop-d34be:testIamPermissions  
+
+[debug] [2018-11-13T04:19:39.071Z] <<< HTTP RESPONSE 200
+[debug] [2018-11-13T04:19:39.072Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/serverless-workshop-d34be  
+ 
+[debug] [2018-11-13T04:19:40.955Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/blas.castellano/dev/workshops/serverless-firebase'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-11-13T04:19:41.777Z] Fetching environment
+[debug] [2018-11-13T04:19:41.779Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/612231292576:getServerAppConfig  
+ 
+[debug] [2018-11-13T04:19:43.364Z] <<< HTTP RESPONSE 200
+[debug] [2018-11-13T04:19:43.365Z] Starting @google-cloud/functions-emulator
+[debug] [2018-11-13T04:19:44.417Z] Parsing function triggers
+[info] ✔  functions: addTodo: http://localhost:5000/serverless-workshop-d34be/us-central1/addTodo
